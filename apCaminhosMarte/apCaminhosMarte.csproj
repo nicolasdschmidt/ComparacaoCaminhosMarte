@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArvoreBusca.cs" />
+    <Compile Include="ArvoreAVL.cs" />
     <Compile Include="ArvoreGrafica.cs" />
     <Compile Include="BuscadorDeCaminhos.cs" />
     <Compile Include="Caminho.cs" />
@@ -58,7 +58,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MatrizCaminhos.cs" />
-    <Compile Include="NoArvore.cs" />
+    <Compile Include="NoAVL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

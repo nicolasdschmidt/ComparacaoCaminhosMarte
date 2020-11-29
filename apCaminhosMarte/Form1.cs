@@ -16,7 +16,7 @@ namespace apCaminhosMarte
 {
     public partial class Form1 : Form
     {
-        private ArvoreBusca<Cidade> arvoreCidades;
+        private ArvoreAVL<Cidade> arvoreCidades;
         private ArvoreGrafica arvoreGrafica;
         private MatrizCaminhos matrizCidades;
         private List<List<Caminho>> todosCaminhos;
@@ -39,7 +39,7 @@ namespace apCaminhosMarte
         // Lendo os arquivosTexto e inicializando as estruturas de dados
         private void Form1_Shown(object sender, EventArgs e)
         {
-            arvoreCidades = new ArvoreBusca<Cidade>();
+            arvoreCidades = new ArvoreAVL<Cidade>();
             LerArquivoCidades("CidadesMarte.txt");
             LerArquivoCidadesOrdenado("CidadesMarteOrdenado.txt");
             arvoreGrafica = new ArvoreGrafica(arvoreCidades);
@@ -151,8 +151,8 @@ namespace apCaminhosMarte
                     var listaTemp = new List<Caminho>();
                     foreach (Caminho c in lista)
                     {
-                        var cidadeOrigemTemp = arvoreCidades.Buscar(c.Origem);
-                        var cidadeDestinoTemp = arvoreCidades.Buscar(c.Destino);
+                        var cidadeOrigemTemp = arvoreCidades.Buscar(c.Origem).Info;
+                        var cidadeDestinoTemp = arvoreCidades.Buscar(c.Destino).Info;
                         var caminhoTemp = new Caminho(cidadeOrigemTemp, cidadeDestinoTemp, c.Distancia, c.Tempo, c.Custo);
                         listaTemp.Add(caminhoTemp);
                     }

@@ -17,9 +17,9 @@ namespace apCaminhosMarte
     /// </summary>
     class ArvoreGrafica
     {
-        public ArvoreBusca<Cidade> Arvore { get; set; }
+        public ArvoreAVL<Cidade> Arvore { get; set; }
 
-        public ArvoreGrafica(ArvoreBusca<Cidade> arvore)
+        public ArvoreGrafica(ArvoreAVL<Cidade> arvore)
         {
             Arvore = arvore;
         }
@@ -45,7 +45,7 @@ namespace apCaminhosMarte
         }
 
         // Método para desenhar bolinhas nas coordenadas dentro da proporção da imagem de cada cidade e seu nome logo ao lado
-        private void DesenharCidades(NoArvore<Cidade> noAtual, Graphics g, PictureBox pb, double proporcaoX, double proporcaoY)
+        private void DesenharCidades(NoAVL<Cidade> noAtual, Graphics g, PictureBox pb, double proporcaoX, double proporcaoY)
         {
             if (noAtual == null) return;
 
@@ -70,8 +70,8 @@ namespace apCaminhosMarte
                 {
                     if ((caminhoAtual = matriz.BuscarPeloIndice(i, j)) != null)
                     {
-                        Cidade cidadeOrigem = Arvore.Buscar(caminhoAtual.Origem);
-                        Cidade cidadeDestino = Arvore.Buscar(caminhoAtual.Destino);
+                        Cidade cidadeOrigem = Arvore.Buscar(caminhoAtual.Origem).Info;
+                        Cidade cidadeDestino = Arvore.Buscar(caminhoAtual.Destino).Info;
 
                         Random rand = new Random();
                         int mediaCidadesX = Convert.ToInt32(((cidadeDestino.X + cidadeOrigem.X) / 2) * proporcaoX);
@@ -90,7 +90,7 @@ namespace apCaminhosMarte
 
         // Método usado para Desenhar a árvore binária no outro pictureBox, baseado no método do professor porém com algumas alterações
         // nas proporções e nas cores dos elementos da árvore
-        private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> noAtual, Graphics g, int x, int y, double angulo, double incremento, double comprimento)
+        private void DesenharArvore(bool primeiraVez, NoAVL<Cidade> noAtual, Graphics g, int x, int y, double angulo, double incremento, double comprimento)
         {
             int xf, yf;
             if (noAtual != null)
