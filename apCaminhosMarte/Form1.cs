@@ -67,7 +67,7 @@ namespace apCaminhosMarte
                 var x = int.Parse(linhaAtual.Substring(18, 5).Trim()); // Espaço da string onde ta a coordenada X
                 var y = int.Parse(linhaAtual.Substring(23, 5).Trim()); // Espaço da string onde ta a coordenada Y
 
-                // Inclusão da cidade na árvore binária
+                // Inclusão da cidade na árvore binária AVL
                 var cidadeAtual = new Cidade(id, nome, x, y);
                 arvoreCidades.Incluir(cidadeAtual);
             }
@@ -135,14 +135,38 @@ namespace apCaminhosMarte
             int origem = lsbOrigem.SelectedIndex;
             int destino = lsbDestino.SelectedIndex;
 
+            // Variável para conter o critério definido pelo Usuário
+            int criterio = -1;
+
             var buscador = new BuscadorDeCaminhos(matrizCidades);
 
             todosCaminhos = new List<List<Caminho>>();
 
+            var todosCaminhosTemp = new List<List<Caminho>>();
             // buscando os caminhos
-            var todosCaminhosTemp = buscador.BuscarCaminho(origem, destino);
+            if (rbPilhas.Checked)
+            {
+                //todosCaminhosTemp = buscador.BuscarCaminhoPilhas(origem, destino);
+            }
+            else if(rbRecursao.Checked)
+            {
+                todosCaminhosTemp = buscador.BuscarCaminhoBackTracking(origem, destino);
+            }
+            
 
             if (todosCaminhosTemp == null) MessageBox.Show("Nenhum caminho encontrado!");
+            else if(rbDijkstra.Checked)
+            {
+                var melhorCaminho = buscador.BuscarCaminhoDijkstra(origem, destino);
+                // Adicionando o melhor caminho no dgvMelhorCaminho
+                dgvMelhorCaminho.ColumnCount = melhorCaminho.Count + 1;
+                int k;
+                for (k = 0; k < melhorCaminho.Count; k++)
+                {
+                    dgvMelhorCaminho.Rows[0].Cells[k].Value = melhorCaminho[k].Origem.Nome + " (" + melhorCaminho[k].Origem.Id + ")";
+                }
+                dgvMelhorCaminho.Rows[0].Cells[k].Value = melhorCaminho[k - 1].Destino.Nome + " (" + melhorCaminho[k - 1].Destino.Id + ")";
+            }
             else
             {
                 // Lógica para criar uma lista de listas, isto é, uma lista dos caminhos, que em si, é uma lista com todos as cidades em que ele passa
@@ -161,7 +185,6 @@ namespace apCaminhosMarte
 
                 // Variáveis e lógica para achar o menor caminho e colocar todos os caminhos no dgvCaminhos, além do melhor caminho no 
                 // dgvMelhorCaminho
-                int menorDistancia = -1;
                 melhorCaminho = null;
 
                 int colunas = 0;
@@ -178,19 +201,43 @@ namespace apCaminhosMarte
 
                     // Adicionando os caminhos no dgvCaminhos
                     int distanciaAtual = 0;
+                    int custoAtual = 0;
+                    int tempoAtual = 0;
                     int j;
                     for (j = 0; j < todosCaminhos[i].Count; j++)
                     {
                         distanciaAtual += todosCaminhos[i][j].Distancia;
+                        custoAtual += todosCaminhos[i][j].Custo;
+                        tempoAtual += todosCaminhos[i][j].Tempo;
+
                         dgvCaminhos.Rows[i].Cells[j].Value = todosCaminhos[i][j].Origem.Nome + " (" + todosCaminhos[i][j].Origem.Id + ")";
                     }
                     dgvCaminhos.Rows[i].Cells[j].Value = todosCaminhos[i][j - 1].Destino.Nome + " (" + todosCaminhos[i][j - 1].Destino.Id + ")";
 
-                    // Definindo o melhorCaminho através da menor distância
-                    if (distanciaAtual < menorDistancia || menorDistancia < 0)
+                    // Definindo o melhorCaminho através da menor critério
+                    if(rbDistancia.Checked)
                     {
-                        menorDistancia = distanciaAtual;
-                        melhorCaminho = todosCaminhos[i];
+                        if (distanciaAtual < criterio || distanciaAtual < 0)
+                        {
+                            criterio = distanciaAtual;
+                            melhorCaminho = todosCaminhos[i];
+                        }
+                    }
+                    else if(rbCusto.Checked)
+                    {
+                        if (custoAtual < criterio || custoAtual < 0)
+                        {
+                            criterio = custoAtual;
+                            melhorCaminho = todosCaminhos[i];
+                        }
+                    }
+                    else
+                    {
+                        if (tempoAtual < criterio || tempoAtual < 0)
+                        {
+                            criterio = tempoAtual;
+                            melhorCaminho = todosCaminhos[i];
+                        }
                     }
                 }
 

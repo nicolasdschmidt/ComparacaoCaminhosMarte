@@ -24,7 +24,7 @@ namespace apCaminhosMarte
             Matriz = matriz;
         }
 
-        public List<List<Caminho>> BuscarCaminho(int idOrigem, int idDestino)
+        public List<List<Caminho>> BuscarCaminhoBackTracking(int idOrigem, int idDestino)
         {
             // inicializar as listas necessárias para execução
             todosCaminhos = new List<List<Caminho>>();
@@ -34,7 +34,7 @@ namespace apCaminhosMarte
             jaVisitados.Add(idOrigem);
 
             // chamar o método interno BuscarCaminho(), passando uma lista de Caminhos vazia para representar o conjunto de Caminhos atual
-            BuscarCaminho(new List<Caminho>(), idOrigem, idDestino);
+            BuscarCaminhoBackTracking(new List<Caminho>(), idOrigem, idDestino);
 
             // se não há caminhos entre as cidades selecionadas, retorna null
             if (todosCaminhos.Count() == 0) return null;
@@ -43,7 +43,45 @@ namespace apCaminhosMarte
             return todosCaminhos;
         }
 
-        private void BuscarCaminho(List<Caminho> caminhoAtual, int cidadeAtual, int cidadeDestino)
+        public List<List<Caminho>> BuscarCaminhoPilha(int idOrigem, int idDestino)
+        {
+            // inicializar as listas necessárias para execução
+            todosCaminhos = new List<List<Caminho>>();
+            jaVisitados = new List<int>();
+
+            // como estamos na cidade de origem, adicioná-la à lista de cidades visitadas
+            jaVisitados.Add(idOrigem);
+
+            // chamar o método interno BuscarCaminho(), passando uma lista de Caminhos vazia para representar o conjunto de Caminhos atual
+            //BuscaCaminhoPilha(new List<Caminho>(), idOrigem, idDestino);
+
+            // se não há caminhos entre as cidades selecionadas, retorna null
+            if (todosCaminhos.Count() == 0) return null;
+
+            // senão, retorna os caminhos
+            return todosCaminhos;
+        }
+
+        public List<Caminho> BuscarCaminhoDijkstra(int idOrigem, int idDestino)
+        {
+            // inicializar as listas necessárias para execução
+            List<Caminho> melhorCaminhoDijkstra = new List<Caminho>;
+            jaVisitados = new List<int>();
+
+            // como estamos na cidade de origem, adicioná-la à lista de cidades visitadas
+            jaVisitados.Add(idOrigem);
+
+            // chamar o método interno BuscarCaminho(), passando uma lista de Caminhos vazia para representar o conjunto de Caminhos atual
+            //BuscarCaminhoDijkstra(new List<Caminho>(), idOrigem, idDestino);
+
+            // se não há caminhos entre as cidades selecionadas, retorna null
+            if (todosCaminhos.Count() == 0) return null;
+
+            // senão, retorna os caminhos
+            return melhorCaminhoDijkstra;
+        }
+
+        private void BuscarCaminhoBackTracking(List<Caminho> caminhoAtual, int cidadeAtual, int cidadeDestino)
         {
             // para todas as cidades que existem,
             for(int i = 0; i < Matriz.Tamanho; i++)
@@ -65,7 +103,7 @@ namespace apCaminhosMarte
                         // adicionamos a cidade atual à lista de visitadas
                         jaVisitados.Add(i);
                         // chamamos o mesmo método, passando o caminho atual e começando da cidade em que estamos
-                        BuscarCaminho(caminhoAtual, i, cidadeDestino);
+                        BuscarCaminhoBackTracking(caminhoAtual, i, cidadeDestino);
                         /* ao finalizar o método, significa que todas as cidades de 'níveis' mais distantes do que essa
                          * ja foram verificadas, então podemos removê-la da lista de cidades visitadas, para que outras
                          * iterações do backtracking possam passar por ela
@@ -77,5 +115,7 @@ namespace apCaminhosMarte
                 }
             }
         }
+
+        private 
     }
 }
