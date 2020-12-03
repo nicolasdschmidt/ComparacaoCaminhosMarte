@@ -89,12 +89,13 @@ namespace apCaminhosMarte
             ret += $"{Id},{Nome}";
             return ret;
         }
+        
         // CompareTo comparando os Ids das Cidades como esperado pelo enunciado do projeto
         public int CompareTo(Cidade outra)
         {
-            if (this.Id > outra.Id)
+            if (Id > outra.Id)
                 return 777;
-            if (this.Id < outra.Id)
+            else if (Id < outra.Id)
                 return -777;
 
             return 0;

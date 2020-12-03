@@ -41,8 +41,7 @@ namespace apCaminhosMarte
             }
             // senão, chamamos a função interna recursiva Incluir e balanceamos a Árvore para cima partindo do Nó inserido
             else {
-                Incluir(Raiz, info);
-                NoAVL<Dado> no = Buscar(info);
+                NoAVL<Dado> no = Incluir(Raiz, info);
                 BalancearAcima(no);
             }
             CalcularAlturas();
@@ -142,7 +141,8 @@ namespace apCaminhosMarte
         {
             NoAVL<Dado> direita = no.Direita;
 
-            no.Direita = no.Esquerda;
+            no.Direita = direita.Esquerda;
+
             if (direita.Esquerda == null)
                 direita.Esquerda = new NoAVL<Dado>();
             direita.Esquerda.Pai = no;
@@ -182,7 +182,7 @@ namespace apCaminhosMarte
         }
 
         // método interno de inclusão recursiva
-        private void Incluir(NoAVL<Dado> noAtual, Dado info)
+        private NoAVL<Dado> Incluir(NoAVL<Dado> noAtual, Dado info)
         {
             // compara o valor armazenado no Nó atual com o valor que queremos armazenar
             int equals = info.CompareTo(noAtual.Info);
@@ -198,9 +198,10 @@ namespace apCaminhosMarte
                     noAtual.Esquerda = new NoAVL<Dado>(info);
                     noAtual.Esquerda.Pai = noAtual;
                     Qtd++;
+                    return noAtual.Esquerda;
                 }
                 // senão, chamamos o mesmo método no Nó da esquerda
-                else Incluir(noAtual.Esquerda, info);
+                else return Incluir(noAtual.Esquerda, info);
             }
             // mas se o valor for maior do que o do Nó atual, o valor deve 'ir' para a direita:
             else
@@ -210,9 +211,10 @@ namespace apCaminhosMarte
                     noAtual.Direita = new NoAVL<Dado>(info);
                     noAtual.Direita.Pai = noAtual;
                     Qtd++;
+                    return noAtual.Direita;
                 }
                 // senão, chamamos o mesmo método no Nó da direita
-                else Incluir(noAtual.Direita, info);
+                else return Incluir(noAtual.Direita, info);
             }
         }
 

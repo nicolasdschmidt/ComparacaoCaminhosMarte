@@ -40,7 +40,7 @@ namespace apCaminhosMarte
         private void Form1_Shown(object sender, EventArgs e)
         {
             arvoreCidades = new ArvoreAVL<Cidade>();
-            LerArquivoCidades("CidadesMarte.txt");
+            LerArquivoCidades("CidadesMarteOrdenado.txt");
             LerArquivoCidadesOrdenado("CidadesMarteOrdenado.txt");
             arvoreGrafica = new ArvoreGrafica(arvoreCidades);
             matrizCidades = new MatrizCaminhos(arvoreCidades.Qtd);
