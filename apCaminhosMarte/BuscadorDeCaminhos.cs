@@ -65,7 +65,7 @@ namespace apCaminhosMarte
         public List<Caminho> BuscarCaminhoDijkstra(int idOrigem, int idDestino)
         {
             // inicializar as listas necessárias para execução
-            List<Caminho> melhorCaminhoDijkstra = new List<Caminho>;
+            List<Caminho> melhorCaminhoDijkstra = new List<Caminho>();
             jaVisitados = new List<int>();
 
             // como estamos na cidade de origem, adicioná-la à lista de cidades visitadas
@@ -116,6 +116,9 @@ namespace apCaminhosMarte
             }
         }
 
-        private 
+        private void BuscarCaminhoDijkstra()
+        {
+
+        }
     }
 }

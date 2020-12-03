@@ -466,6 +466,7 @@
             this.pbMapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbMapa.TabIndex = 0;
             this.pbMapa.TabStop = false;
+            this.pbMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMapa_Paint);
             // 
             // tpArvore
             // 
@@ -488,6 +489,7 @@
             this.pbArvore.Size = new System.Drawing.Size(1305, 531);
             this.pbArvore.TabIndex = 0;
             this.pbArvore.TabStop = false;
+            this.pbArvore.Paint += new System.Windows.Forms.PaintEventHandler(this.pbArvore_Paint);
             // 
             // Form1
             // 

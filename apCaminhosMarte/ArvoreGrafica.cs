@@ -66,9 +66,10 @@ namespace apCaminhosMarte
             Font fonte = new Font("Arial", 12, FontStyle.Bold);
             for (int i = 0; i < Arvore.Qtd; i++)
             {
-                for (int j = 0; j < Arvore.Qtd; j++)
+                for ( int j = 0; j < Arvore.Qtd; j++)
                 {
-                    if ((caminhoAtual = matriz.BuscarPeloIndice(i, j)) != null)
+                    caminhoAtual = matriz.BuscarPeloIndice(i, j);
+                    if (caminhoAtual != null)
                     {
                         Cidade cidadeOrigem = Arvore.Buscar(caminhoAtual.Origem).Info;
                         Cidade cidadeDestino = Arvore.Buscar(caminhoAtual.Destino).Info;
