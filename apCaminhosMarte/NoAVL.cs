@@ -23,21 +23,21 @@ namespace apCaminhosMarte
 
         public NoAVL()
         {
-            Altura = 0;
-            Fator = 0;
-            Pai = null;
+            Altura   = 0;
+            Fator    = 0;
+            Pai      = null;
             Esquerda = null;
-            Direita = null;
+            Direita  = null;
         }
 
         public NoAVL(Dado info)
         {
-            Info = info;
-            Altura = 0;
-            Fator = 0;
-            Pai = null;
+            Info     = info;
+            Altura   = 0;
+            Fator    = 0;
+            Pai      = null;
             Esquerda = null;
-            Direita = null;
+            Direita  = null;
         }
     }
 }

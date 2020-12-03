@@ -18,6 +18,7 @@ namespace apCaminhosMarte
     /// Binária de Busca, como pedido na proposta do projeto.
     /// </summary>
     /// <typeparam name="Dado">Tipo</typeparam>
+
     class ArvoreAVL<Dado> where Dado : IComparable<Dado>
     {
         public NoAVL<Dado> Raiz { get; set; }
@@ -26,7 +27,7 @@ namespace apCaminhosMarte
         public ArvoreAVL()
         {
             Raiz = null;
-            Qtd = 0;
+            Qtd  = 0;
         }
 
         // método público de inclusão
@@ -36,7 +37,7 @@ namespace apCaminhosMarte
             if (Raiz == null)
             {
                 Raiz = new NoAVL<Dado>(info);
-                Qtd = 1;
+                Qtd  = 1;
             }
             // senão, chamamos a função interna recursiva Incluir e balanceamos a Árvore para cima partindo do Nó inserido
             else {
