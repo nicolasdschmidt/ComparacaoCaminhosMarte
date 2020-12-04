@@ -111,7 +111,7 @@ namespace apCaminhosMarte
                         jaVisitados.Remove(i);
                     }
                     // no fim, temos que remover a ultima etapa do caminho atual, seguindo a lógica de backtracking
-                    caminhoAtual.RemoveAt(caminhoAtual.Count - 1);
+                    //caminhoAtual.RemoveAt(caminhoAtual.Count - 1);
                 }
             }
         }

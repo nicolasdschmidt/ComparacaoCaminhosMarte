@@ -127,6 +127,21 @@ namespace apCaminhosMarte
         // Event do btnBuscar para acionar o BuscadorDeCaminhos e aplicar o Backtracking
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
+            // verifica se algum radio button do groupbox criterio ou metodo está checked...
+            var criterioExiste = gbCriterio.Controls.OfType<RadioButton>()
+                           .FirstOrDefault(n => n.Checked);
+            var metodoExiste = gbMetodo.Controls.OfType<RadioButton>().FirstOrDefault(n => n.Checked);
+            if (criterioExiste == null)
+            {
+                MessageBox.Show("Nenhum Critério foi escolhido. Escolha um!", "Critério", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (metodoExiste == null)
+            {
+                MessageBox.Show("Nenhum método foi escolhido. Escolha um!", "Método", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
             // resetando os dgvs
             dgvCaminhos.Rows.Clear();
             dgvMelhorCaminho.Rows.Clear();
@@ -134,9 +149,20 @@ namespace apCaminhosMarte
             // pegando as cidades selecionadas nos ListBoxs
             int origem = lsbOrigem.SelectedIndex;
             int destino = lsbDestino.SelectedIndex;
+            // verificando se alguma cidade destino e alguma cidade origem estão selecionadas
+            if (origem < 0)
+            {
+                MessageBox.Show("Cidade Origem não foi selecionada. Escolhe-a!", "Cidade Origem Indefinida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (destino < 0)
+            {
+                MessageBox.Show("Cidade Destino não foi selecionada. Escolhe-a!", "Método", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Variável para conter o critério definido pelo Usuário
-            int criterio = -1;
+            int criterio = int.MaxValue;
 
             var buscador = new BuscadorDeCaminhos(matrizCidades);
 
