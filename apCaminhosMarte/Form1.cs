@@ -22,6 +22,8 @@ namespace apCaminhosMarte
         private List<List<Caminho>> todosCaminhos;
         private List<Caminho> melhorCaminho;
         private List<Caminho> caminhoSelecionado;
+        private Dijkstra dijkstra;
+        private List<Cidade> cidades;
 
         private double proporcaoX, proporcaoY;
 
@@ -53,6 +55,7 @@ namespace apCaminhosMarte
         // Método para ler o CidadesMarte.txt
         private void LerArquivoCidades(string nomeArquivo)
         {
+            cidades = new List<Cidade>();
             // Exceção caso o arquivo não exista - o que não ocorrerá
             if (!File.Exists(nomeArquivo))
                 throw new Exception($"Arquivo {nomeArquivo} não encontrado");
@@ -69,6 +72,7 @@ namespace apCaminhosMarte
 
                 // Inclusão da cidade na árvore binária AVL
                 var cidadeAtual = new Cidade(id, nome, x, y);
+                cidades.Add(cidadeAtual);
                 arvoreCidades.Incluir(cidadeAtual);
             }
         }
@@ -127,6 +131,7 @@ namespace apCaminhosMarte
         // Event do btnBuscar para acionar o BuscadorDeCaminhos e aplicar o Backtracking
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
+            //dijkstra = new Dijkstra(arvoreCidades.Qtd, cidades, matrizCidades);
             // verifica se algum radio button do groupbox criterio ou metodo está checked...
             var criterioExiste = gbCriterio.Controls.OfType<RadioButton>()
                            .FirstOrDefault(n => n.Checked);
@@ -183,7 +188,8 @@ namespace apCaminhosMarte
             if (todosCaminhosTemp == null) MessageBox.Show("Nenhum caminho encontrado!");
             else if(rbDijkstra.Checked)
             {
-                var melhorCaminho = buscador.BuscarCaminhoDijkstra(origem, destino);
+                //var melhorCaminho = dijkstra.Caminho(origem, destino);
+                var melhorCaminho = buscador.BuscarCaminhoDijkstra(origem, destino, cidades);
                 // Adicionando o melhor caminho no dgvMelhorCaminho
                 dgvMelhorCaminho.ColumnCount = melhorCaminho.Count + 1;
                 int k;
@@ -323,6 +329,21 @@ namespace apCaminhosMarte
                 pbMapa.Refresh();
             }
             catch (Exception) { }
+        }
+
+        private void rbDistancia_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbTempo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbCusto_Click(object sender, EventArgs e)
+        {
+
         }
 
         // Disparando o evento quando algum caminho do dgvCaminhos é selecionado para destacá-lo, dando um refresh no pbMapa

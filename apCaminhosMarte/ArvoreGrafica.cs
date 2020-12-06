@@ -38,7 +38,6 @@ namespace apCaminhosMarte
         public void DesenharCaminho(List<Caminho> caminhoAtual, Graphics g, PictureBox pb, double proporcaoX, double proporcaoY)
         {
             Pen pen = new Pen(Color.Yellow, 2.0f);
-            pen.DashPattern
             foreach (Caminho c in caminhoAtual)
             {
                 g.DrawLine(pen, (int)Math.Round(c.Origem.X * proporcaoX), (int)Math.Round(c.Origem.Y * proporcaoY), (int)Math.Round(c.Destino.X * proporcaoX), (int)Math.Round(c.Destino.Y * proporcaoY));
@@ -72,19 +71,51 @@ namespace apCaminhosMarte
                     caminhoAtual = matriz.BuscarPeloIndice(i, j);
                     if (caminhoAtual != null)
                     {
+                        if (caminhoAtual.Origem != null)
+                        {
+                            Cidade cidadeOrigem = Arvore.Buscar(caminhoAtual.Origem).Info;
+                            Cidade cidadeDestino = Arvore.Buscar(caminhoAtual.Destino).Info;
+
+                            Random rand = new Random();
+                            int mediaCidadesX = Convert.ToInt32(((cidadeDestino.X + cidadeOrigem.X) / 2) * proporcaoX);
+                            int mediaCidadesY = Convert.ToInt32(((cidadeDestino.Y + cidadeOrigem.Y) / 2) * proporcaoY);
+                            int variacao = rand.Next(-20, 20);
+
+                            PointF[] vetorDePontosParaAsCurvas = { new PointF((int)Math.Round(cidadeOrigem.X * proporcaoX),(int)Math.Round(cidadeOrigem.Y * proporcaoY)),
+                                                               new PointF(mediaCidadesX+variacao, mediaCidadesY+variacao),
+                                                               new PointF((int)Math.Round(cidadeDestino.X * proporcaoX), (int)Math.Round(cidadeDestino.Y * proporcaoY)) };
+                            g.DrawCurve(new Pen(Color.DeepSkyBlue, 2.5f), vetorDePontosParaAsCurvas, 0.5F);
+                            //g.DrawString(caminhoAtual.Distancia + "", fonte, new SolidBrush(Color.Blue), mediaCidadesX, mediaCidadesY);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DesenharCriterio(MatrizCaminhos matriz, Graphics g, PictureBox pb, double proporcaoX, double proporcaoY, bool criterioCusto, bool criterioDistancia, bool criterioTempo)
+        {
+            Caminho caminhoAtual;
+            Font fonte = new Font("Arial", 12, FontStyle.Bold);
+            for (int i = 0; i < Arvore.Qtd; i++)
+            {
+                for (int j = 0; j < Arvore.Qtd; j++)
+                {
+                    caminhoAtual = matriz.BuscarPeloIndice(i, j);
+                    if (caminhoAtual != null)
+                    {
                         Cidade cidadeOrigem = Arvore.Buscar(caminhoAtual.Origem).Info;
                         Cidade cidadeDestino = Arvore.Buscar(caminhoAtual.Destino).Info;
 
                         Random rand = new Random();
                         int mediaCidadesX = Convert.ToInt32(((cidadeDestino.X + cidadeOrigem.X) / 2) * proporcaoX);
                         int mediaCidadesY = Convert.ToInt32(((cidadeDestino.Y + cidadeOrigem.Y) / 2) * proporcaoY);
-                        int variacao = rand.Next(-20, 20);
 
-                        PointF[] vetorDePontosParaAsCurvas = { new PointF((int)Math.Round(cidadeOrigem.X * proporcaoX),(int)Math.Round(cidadeOrigem.Y * proporcaoY)),
-                                                               new PointF(mediaCidadesX+variacao, mediaCidadesY+variacao),
-                                                               new PointF((int)Math.Round(cidadeDestino.X * proporcaoX), (int)Math.Round(cidadeDestino.Y * proporcaoY)) };
-                        g.DrawCurve(new Pen(Color.DeepSkyBlue, 2.5f), vetorDePontosParaAsCurvas, 0.5F);
-                        g.DrawString(caminhoAtual.Distancia + "", fonte, new SolidBrush(Color.Blue), mediaCidadesX, mediaCidadesY);
+                        if(criterioDistancia)
+                            g.DrawString(caminhoAtual.Distancia + " KM", fonte, new SolidBrush(Color.Blue), mediaCidadesX, mediaCidadesY);
+                        else if(criterioCusto)
+                            g.DrawString(caminhoAtual.Custo + ",00", fonte, new SolidBrush(Color.Blue), mediaCidadesX, mediaCidadesY);
+                        else if(criterioTempo)
+                            g.DrawString(caminhoAtual.Tempo + ":00", fonte, new SolidBrush(Color.Blue), mediaCidadesX, mediaCidadesY);
                     }
                 }
             }

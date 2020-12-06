@@ -22,6 +22,10 @@ namespace apCaminhosMarte
         {
             tamanho = qtd;
             matriz = new Caminho[qtd, qtd];
+
+            /*for (int i = 0; i < qtd; i++)
+                for (int j = 0; j < qtd; j++)
+                    matriz[i, j] = new Caminho(int.MaxValue, int.MaxValue, int.MaxValue);*/
         }
 
         // Método público de inclusão

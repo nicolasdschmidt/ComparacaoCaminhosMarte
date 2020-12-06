@@ -30,6 +30,21 @@ namespace apCaminhosMarte
             Custo = custo;
         }
 
+        public Caminho(Cidade origem, int distancia, int tempo, int custo)
+        {
+            Origem = origem;
+            Distancia = distancia;
+            Tempo = tempo;
+            Custo = custo;
+        }
+
+        public Caminho(int distancia, int tempo, int custo)
+        {
+            Distancia = distancia;
+            Tempo = tempo;
+            Custo = custo;
+        }
+
         public Cidade Origem 
         { 
             get => origem;

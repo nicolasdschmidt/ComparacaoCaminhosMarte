@@ -18,13 +18,18 @@ namespace apCaminhosMarte
         private string nome;
         private int x;
         private int y;
+        // Variáveis Dijkstra...
+        private bool foiVisitada;
+        private bool estaAtiva;
 
-        public Cidade (int id, string nome, int x, int y)
+        public Cidade(int id, string nome, int x, int y)
         {
             Id = id;
             Nome = nome;
             X = x;
             Y = y;
+            Visitada = false;
+            Ativa = true;
         }
 
         public Cidade(int id)
@@ -79,6 +84,24 @@ namespace apCaminhosMarte
                 if (value < 0)
                     throw new Exception("Coordenada Y inválida");
                 y = value;
+            }
+        }
+
+        public bool Visitada
+        {
+            get => foiVisitada;
+            set
+            {
+                foiVisitada = value;
+            }
+        }
+
+        public bool Ativa
+        {
+            get => estaAtiva;
+            set
+            {
+                estaAtiva = value;
             }
         }
 
