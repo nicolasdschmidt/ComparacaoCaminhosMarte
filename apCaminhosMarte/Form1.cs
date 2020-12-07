@@ -243,7 +243,7 @@ namespace apCaminhosMarte
                     // Definindo o melhorCaminho através da menor critério
                     if(rbDistancia.Checked)
                     {
-                        if (distanciaAtual < criterio || distanciaAtual < 0)
+                        if (distanciaAtual < criterio || criterio < 0)
                         {
                             criterio = distanciaAtual;
                             melhorCaminho = todosCaminhos[i];
@@ -251,7 +251,7 @@ namespace apCaminhosMarte
                     }
                     else if(rbCusto.Checked)
                     {
-                        if (custoAtual < criterio || custoAtual < 0)
+                        if (custoAtual < criterio || criterio < 0)
                         {
                             criterio = custoAtual;
                             melhorCaminho = todosCaminhos[i];
@@ -259,7 +259,7 @@ namespace apCaminhosMarte
                     }
                     else
                     {
-                        if (tempoAtual < criterio || tempoAtual < 0)
+                        if (tempoAtual < criterio || criterio < 0)
                         {
                             criterio = tempoAtual;
                             melhorCaminho = todosCaminhos[i];
@@ -277,6 +277,7 @@ namespace apCaminhosMarte
                 dgvMelhorCaminho.Rows[0].Cells[k].Value = melhorCaminho[k - 1].Destino.Nome + " (" + melhorCaminho[k - 1].Destino.Id + ")";
             }
             caminhoSelecionado = melhorCaminho;
+            pbMapa.Refresh();
         }
 
         // Método para pintar
