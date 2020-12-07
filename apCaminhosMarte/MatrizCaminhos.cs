@@ -14,13 +14,11 @@ namespace apCaminhosMarte
     class MatrizCaminhos
     {
         Caminho[,] matriz;
-        int tamanho;
-
-        public int Tamanho { get => tamanho; }
+        public int Tamanho { get; }
 
         public MatrizCaminhos(int qtd)
         {
-            tamanho = qtd;
+            Tamanho = qtd;
             matriz = new Caminho[qtd, qtd];
         }
 
@@ -48,9 +46,9 @@ namespace apCaminhosMarte
         {
             string ret = "";
 
-            for (int i = 0; i < tamanho; i++)
+            for (int i = 0; i < Tamanho; i++)
             {
-                for (int j = 0; j < tamanho; j++)
+                for (int j = 0; j < Tamanho; j++)
                 {
                     if (i == j) ret += "0".PadLeft(6, ' ');
                     else

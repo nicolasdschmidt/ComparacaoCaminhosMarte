@@ -101,6 +101,11 @@ namespace apCaminhosMarte
             return 0;
         }
 
+        public bool Equals(Cidade outra)
+        {
+            return Id == outra.Id;
+        }
+
 
         public Cidade Clone()
         {

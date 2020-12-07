@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -43,23 +44,16 @@ namespace apCaminhosMarte
             return todosCaminhos;
         }
 
-        public List<List<Caminho>> BuscarCaminhoPilha(int idOrigem, int idDestino)
+        public List<List<Caminho>> BuscarCaminhoPilha(Cidade origem, Cidade destino)
         {
-            // inicializar as listas necessárias para execução
-            todosCaminhos = new List<List<Caminho>>();
-            jaVisitados = new List<int>();
-
-            // como estamos na cidade de origem, adicioná-la à lista de cidades visitadas
-            jaVisitados.Add(idOrigem);
-
-            // chamar o método interno BuscarCaminho(), passando uma lista de Caminhos vazia para representar o conjunto de Caminhos atual
-            //BuscaCaminhoPilha(new List<Caminho>(), idOrigem, idDestino);
+            BuscadorPilha buscador = new BuscadorPilha(Matriz, origem, destino);
+            buscador.Solucionar();
 
             // se não há caminhos entre as cidades selecionadas, retorna null
-            if (todosCaminhos.Count() == 0) return null;
+            if (buscador.Solucoes.Count == 0) return null;
 
             // senão, retorna os caminhos
-            return todosCaminhos;
+            return buscador.Solucoes;
         }
 
         public List<Caminho> BuscarCaminhoDijkstra(int idOrigem, int idDestino)

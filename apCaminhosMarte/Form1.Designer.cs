@@ -124,6 +124,7 @@
             // 
             // gbMetodo
             // 
+            this.gbMetodo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gbMetodo.Controls.Add(this.rbDijkstra);
             this.gbMetodo.Controls.Add(this.rbRecursao);
             this.gbMetodo.Controls.Add(this.rbPilhas);
@@ -175,6 +176,7 @@
             // 
             // gbCriterio
             // 
+            this.gbCriterio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gbCriterio.Controls.Add(this.rbCusto);
             this.gbCriterio.Controls.Add(this.rbTempo);
             this.gbCriterio.Controls.Add(this.rbDistancia);

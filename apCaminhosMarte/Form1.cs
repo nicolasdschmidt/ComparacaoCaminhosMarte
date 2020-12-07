@@ -172,7 +172,7 @@ namespace apCaminhosMarte
             // buscando os caminhos
             if (rbPilhas.Checked)
             {
-                //todosCaminhosTemp = buscador.BuscarCaminhoPilhas(origem, destino);
+                todosCaminhosTemp = buscador.BuscarCaminhoPilha(arvoreCidades.Buscar(new Cidade(origem)).Info, arvoreCidades.Buscar(new Cidade(destino)).Info);
             }
             else if(rbRecursao.Checked)
             {
@@ -226,9 +226,9 @@ namespace apCaminhosMarte
                     }
 
                     // Adicionando os caminhos no dgvCaminhos
-                    int distanciaAtual = 0;
-                    int custoAtual = 0;
-                    int tempoAtual = 0;
+                    int distanciaAtual = -1;
+                    int custoAtual = -1;
+                    int tempoAtual = -1;
                     int j;
                     for (j = 0; j < todosCaminhos[i].Count; j++)
                     {
