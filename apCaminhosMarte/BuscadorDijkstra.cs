@@ -11,6 +11,7 @@ namespace apCaminhosMarte
         private Caminho[,] matriz;
         private int tamanho;
         private string criterio;
+        private int infinity = int.MaxValue;
         private List<int> caminho;
 
         private Cidade origem, destino;
@@ -20,7 +21,7 @@ namespace apCaminhosMarte
             public X Info { get; set; }
             public No<X> Pai { get; set; }
             public bool Ativo { get; set; }
-            public bool Distancia { get; set; }
+            public int Distancia { get; set; }
         }
 
         public BuscadorDijkstra(MatrizCaminhos matriz, Cidade origem, Cidade destino, String criterio)
@@ -38,21 +39,35 @@ namespace apCaminhosMarte
             if (criterio != "distancia" && criterio != "tempo" && criterio != "custo")
                 throw new Exception("Critério inválido!");
 
-            int[] dist = new int[tamanho];
-            bool[] ativo = new bool[tamanho];
+            No<int>[] dados = new No<int>[tamanho];
 
-            for (int i = 0; i < tamanho; ++i)
+            for (int i = 0; i < tamanho; i++)
             {
-                dist[i] = int.MaxValue;
-                ativo[i] = false;
+                No<int> dado = new No<int>();
+                dado.Distancia = infinity;
+                dado.Ativo = false;
+
+                dados[i] = dado;
             }
 
-            dist[origem.Id] = 0;
+            dados[origem.Id].Distancia = 0;
+            dados[origem.Id].Pai = null;
 
             for (int count = 0; count < tamanho - 1; ++count)
             {
-                int maisProx = MaisProximo(dist, ativo, tamanho);
-                ativo[maisProx] = true;
+                int maisProx = 0;
+                int min = infinity;
+
+                for (int i = 0; i < tamanho; ++i)
+                {
+                    if (!dados[i].Ativo && dados[i].Distancia <= min)
+                    {
+                        min = dados[i].Distancia;
+                        maisProx = i;
+                    }
+                }
+
+                dados[maisProx].Ativo = true;
 
                 for (int i = 0; i < tamanho; ++i)
                 {
@@ -74,9 +89,9 @@ namespace apCaminhosMarte
                                 break;
                         }
 
-                        if (!ativo[i] && dist[maisProx] != int.MaxValue && dist[maisProx] + atual < dist[i])
+                        if (!dados[i].Ativo && dados[maisProx].Distancia != infinity && dados[maisProx].Distancia + atual < dados[i].Distancia)
                         {
-                            dist[i] = dist[maisProx] + atual;
+                            dados[i].Distancia = dados[maisProx].Distancia + atual;
                         }
                     }
                 }
