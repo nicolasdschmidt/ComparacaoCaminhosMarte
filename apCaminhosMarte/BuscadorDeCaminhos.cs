@@ -16,12 +16,14 @@ namespace apCaminhosMarte
     /// </summary>
     class BuscadorDeCaminhos
     {
+        private ArvoreAVL<Cidade> Arvore { get; set; }
         private MatrizCaminhos Matriz { get; set; }
         private List<List<Caminho>> todosCaminhos;
         private List<int> jaVisitados;
 
-        public BuscadorDeCaminhos(MatrizCaminhos matriz)
+        public BuscadorDeCaminhos(ArvoreAVL<Cidade> arvore, MatrizCaminhos matriz)
         {
+            Arvore = arvore;
             Matriz = matriz;
         }
 
@@ -58,10 +60,10 @@ namespace apCaminhosMarte
 
         public List<Caminho> BuscarCaminhoDijkstra(Cidade origem, Cidade destino, string criterio)
         {
-            BuscadorDijkstra buscador = new BuscadorDijkstra(Matriz, origem, destino, criterio);
-            buscador.Solucionar();
+            BuscadorDijkstra buscador = new BuscadorDijkstra(Arvore, Matriz, origem, destino, criterio);
+            List<Caminho> caminho = buscador.Solucionar();
 
-            return new List<Caminho>();
+            return caminho;
         }
 
         private void BuscarCaminhoBackTracking(List<Caminho> caminhoAtual, int cidadeAtual, int cidadeDestino)

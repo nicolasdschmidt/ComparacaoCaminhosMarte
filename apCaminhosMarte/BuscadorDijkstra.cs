@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,11 +9,12 @@ namespace apCaminhosMarte
 {
     class BuscadorDijkstra
     {
+        private ArvoreAVL<Cidade> arvore;
+        MatrizCaminhos matrizCaminhos;
         private Caminho[,] matriz;
         private int tamanho;
         private string criterio;
         private int infinity = int.MaxValue;
-        private List<int> caminho;
 
         private Cidade origem, destino;
 
@@ -21,20 +23,21 @@ namespace apCaminhosMarte
             public X Info { get; set; }
             public No<X> Pai { get; set; }
             public bool Ativo { get; set; }
-            public int Distancia { get; set; }
+            public int Peso { get; set; }
         }
 
-        public BuscadorDijkstra(MatrizCaminhos matriz, Cidade origem, Cidade destino, String criterio)
+        public BuscadorDijkstra(ArvoreAVL<Cidade> arvore, MatrizCaminhos matriz, Cidade origem, Cidade destino, String criterio)
         {
-            this.matriz = new MatrizCaminhos(matriz).Matriz;
+            this.arvore = arvore;
+            matrizCaminhos = new MatrizCaminhos(matriz);
+            this.matriz = matrizCaminhos.Matriz;
             tamanho = matriz.Tamanho;
             this.origem = origem;
             this.destino = destino;
             this.criterio = criterio;
-            this.caminho = new List<int>();
         }
 
-        public void Solucionar()
+        public List<Caminho> Solucionar()
         {
             if (criterio != "distancia" && criterio != "tempo" && criterio != "custo")
                 throw new Exception("Critério inválido!");
@@ -44,13 +47,14 @@ namespace apCaminhosMarte
             for (int i = 0; i < tamanho; i++)
             {
                 No<int> dado = new No<int>();
-                dado.Distancia = infinity;
+                dado.Peso = infinity;
                 dado.Ativo = false;
+                dado.Info = arvore.Buscar(new Cidade(i)).Info.Id;
 
                 dados[i] = dado;
             }
 
-            dados[origem.Id].Distancia = 0;
+            dados[origem.Id].Peso = 0;
             dados[origem.Id].Pai = null;
 
             for (int count = 0; count < tamanho - 1; ++count)
@@ -60,9 +64,9 @@ namespace apCaminhosMarte
 
                 for (int i = 0; i < tamanho; ++i)
                 {
-                    if (!dados[i].Ativo && dados[i].Distancia <= min)
+                    if (!dados[i].Ativo && dados[i].Peso <= min)
                     {
-                        min = dados[i].Distancia;
+                        min = dados[i].Peso;
                         maisProx = i;
                     }
                 }
@@ -89,30 +93,30 @@ namespace apCaminhosMarte
                                 break;
                         }
 
-                        if (!dados[i].Ativo && dados[maisProx].Distancia != infinity && dados[maisProx].Distancia + atual < dados[i].Distancia)
+                        if (!dados[i].Ativo && dados[maisProx].Peso != infinity && dados[maisProx].Peso + atual < dados[i].Peso)
                         {
-                            dados[i].Distancia = dados[maisProx].Distancia + atual;
+                            dados[i].Peso = dados[maisProx].Peso + atual;
+                            dados[i].Pai = dados[maisProx];
                         }
                     }
                 }
             }
-        }
 
-        private int MaisProximo(int[] dist, bool[] ativo, int tamanho)
-        {
-            int min = int.MaxValue;
-            int minIndex = 0;
+            List<Caminho> caminho = new List<Caminho>();
 
-            for (int v = 0; v < tamanho; ++v)
+            No<int> noAtual = dados[destino.Id];
+            while (noAtual.Pai != null)
             {
-                if (ativo[v] == false && dist[v] <= min)
-                {
-                    min = dist[v];
-                    minIndex = v;
-                }
+                //Caminho c = matrizCaminhos.BuscarPeloIndice(noAtual.Pai.Info, noAtual.Info);
+                Caminho temp = matrizCaminhos.BuscarPeloIndice(noAtual.Pai.Info, noAtual.Info);
+                Caminho c = new Caminho(arvore.Buscar(new Cidade(noAtual.Pai.Info)).Info, arvore.Buscar(new Cidade(noAtual.Info)).Info, temp.Distancia, temp.Tempo, temp.Custo);
+                caminho.Add(c);
+                noAtual = noAtual.Pai;
             }
 
-            return minIndex;
+            caminho.Reverse();
+
+            return caminho;
         }
     }
 }

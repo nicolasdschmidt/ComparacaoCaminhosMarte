@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpRotas = new System.Windows.Forms.TabPage();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblMenor = new System.Windows.Forms.Label();
             this.gbMetodo = new System.Windows.Forms.GroupBox();
             this.rbDijkstra = new System.Windows.Forms.RadioButton();
             this.rbRecursao = new System.Windows.Forms.RadioButton();
@@ -90,7 +90,7 @@
             // 
             // tpRotas
             // 
-            this.tpRotas.Controls.Add(this.label5);
+            this.tpRotas.Controls.Add(this.lblMenor);
             this.tpRotas.Controls.Add(this.gbMetodo);
             this.tpRotas.Controls.Add(this.gbCriterio);
             this.tpRotas.Controls.Add(this.btnBuscar);
@@ -111,16 +111,16 @@
             this.tpRotas.Text = "Rotas entre cidades";
             this.tpRotas.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // lblMenor
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(1036, 523);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(245, 17);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Total do menor percurso: --------";
+            this.lblMenor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMenor.AutoSize = true;
+            this.lblMenor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMenor.Location = new System.Drawing.Point(1036, 523);
+            this.lblMenor.Name = "lblMenor";
+            this.lblMenor.Size = new System.Drawing.Size(245, 17);
+            this.lblMenor.TabIndex = 14;
+            this.lblMenor.Text = "Total do menor percurso: --------";
             // 
             // gbMetodo
             // 
@@ -555,7 +555,7 @@
         private System.Windows.Forms.RadioButton rbCusto;
         private System.Windows.Forms.RadioButton rbTempo;
         private System.Windows.Forms.RadioButton rbDistancia;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblMenor;
         private System.Windows.Forms.PictureBox pbArvore;
     }
 }

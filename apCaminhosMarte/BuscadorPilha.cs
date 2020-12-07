@@ -13,7 +13,7 @@ namespace apCaminhosMarte
         private MatrizCaminhos matrizCidades;
         private List<Caminho> passos;
         private Cidade atual;
-        private List<Cidade> passou;
+        private List<Cidade> jaPassou;
         private Cidade origem, destino;
 
         public List<List<Caminho>> Solucoes { get; }
@@ -23,7 +23,7 @@ namespace apCaminhosMarte
             this.matrizCidades = matrizCidades;
             this.origem = origem;
             this.destino = destino;
-            this.passou = new List<Cidade>();
+            this.jaPassou = new List<Cidade>();
 
             Solucoes = new List<List<Caminho>>();
         }
@@ -47,24 +47,24 @@ namespace apCaminhosMarte
 
         private bool Avancar()
         {
-            passou.Add(atual);
+            jaPassou.Add(atual);
             for (int i = 0; i < matrizCidades.Tamanho; i++)
             {
                 Caminho tentativa = matrizCidades.BuscarPeloIndice(atual.Id, i);
                 if (tentativa != null)
                 {
-                    if (!atual.Equals(tentativa.Destino) && !passou.Exists(c => c.Equals(tentativa.Destino)))
+                    if (!atual.Equals(tentativa.Destino) && !jaPassou.Exists(c => c.Equals(tentativa.Destino)))
                     {
                         if (tentativa.Destino.Equals(destino))
                         {
                             passos.Add(tentativa);
                             Solucoes.Add(new List<Caminho>(passos));
-                            passos.Remove(tentativa);
+                            passos.RemoveAt(passos.Count - 1);
                             return false;
                         }
                         else
                         {
-                            //passou.Add(tentativa.Destino);
+                            jaPassou.Add(tentativa.Destino);
                             passos.Add(tentativa);
                             atual = tentativa.Destino;
                             return true;
@@ -85,9 +85,9 @@ namespace apCaminhosMarte
 
             try
             {
-                passou.RemoveAt(passos.Count - 1);
+                jaPassou.Remove(atual);
             }
-            catch (Exception) { }
+            catch (Exception) {}
 
             if (passos.Count == 0)
                 return false;

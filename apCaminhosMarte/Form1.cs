@@ -164,7 +164,7 @@ namespace apCaminhosMarte
             // Variável para conter o critério definido pelo Usuário
             int criterio = int.MaxValue;
 
-            var buscador = new BuscadorDeCaminhos(matrizCidades);
+            var buscador = new BuscadorDeCaminhos(arvoreCidades, matrizCidades);
 
             todosCaminhos = new List<List<Caminho>>();
 
@@ -191,7 +191,7 @@ namespace apCaminhosMarte
                 else
                     criterioDijkstra = "tempo";
 
-                var melhorCaminho = buscador.BuscarCaminhoDijkstra(arvoreCidades.Buscar(new Cidade(origem)).Info, arvoreCidades.Buscar(new Cidade(destino)).Info, criterioDijkstra);
+                melhorCaminho = buscador.BuscarCaminhoDijkstra(arvoreCidades.Buscar(new Cidade(origem)).Info, arvoreCidades.Buscar(new Cidade(destino)).Info, criterioDijkstra);
                 // Adicionando o melhor caminho no dgvMelhorCaminho
                 dgvMelhorCaminho.ColumnCount = melhorCaminho.Count + 1;
                 int k;
@@ -284,6 +284,35 @@ namespace apCaminhosMarte
                 }
                 dgvMelhorCaminho.Rows[0].Cells[k].Value = melhorCaminho[k - 1].Destino.Nome + " (" + melhorCaminho[k - 1].Destino.Id + ")";
             }
+
+            if (rbDistancia.Checked)
+            {
+                int total = 0;
+                foreach(Caminho c in melhorCaminho)
+                {
+                    total += c.Distancia;
+                }
+                lblMenor.Text = "Total do menor percurso: " + total + " km";
+            }
+            else if (rbCusto.Checked)
+            {
+                int total = 0;
+                foreach (Caminho c in melhorCaminho)
+                {
+                    total += c.Custo;
+                }
+                lblMenor.Text = "Total do menor percurso: R$" + total;
+            }
+            else
+            {
+                int total = 0;
+                foreach (Caminho c in melhorCaminho)
+                {
+                    total += c.Tempo;
+                }
+                lblMenor.Text = "Total do menor percurso: " + total + " horas";
+            }
+
             caminhoSelecionado = melhorCaminho;
             pbMapa.Refresh();
         }
