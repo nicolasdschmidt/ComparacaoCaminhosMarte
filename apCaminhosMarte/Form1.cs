@@ -183,7 +183,15 @@ namespace apCaminhosMarte
             if (todosCaminhosTemp == null) MessageBox.Show("Nenhum caminho encontrado!");
             else if(rbDijkstra.Checked)
             {
-                var melhorCaminho = buscador.BuscarCaminhoDijkstra(origem, destino);
+                string criterioDijkstra;
+                if (rbDistancia.Checked)
+                    criterioDijkstra = "distancia";
+                else if (rbCusto.Checked)
+                    criterioDijkstra = "custo";
+                else
+                    criterioDijkstra = "tempo";
+
+                var melhorCaminho = buscador.BuscarCaminhoDijkstra(arvoreCidades.Buscar(new Cidade(origem)).Info, arvoreCidades.Buscar(new Cidade(destino)).Info, criterioDijkstra);
                 // Adicionando o melhor caminho no dgvMelhorCaminho
                 dgvMelhorCaminho.ColumnCount = melhorCaminho.Count + 1;
                 int k;

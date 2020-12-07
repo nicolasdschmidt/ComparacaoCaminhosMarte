@@ -49,6 +49,7 @@
     <Compile Include="ArvoreAVL.cs" />
     <Compile Include="ArvoreGrafica.cs" />
     <Compile Include="BuscadorDeCaminhos.cs" />
+    <Compile Include="BuscadorDijkstra.cs" />
     <Compile Include="BuscadorPilha.cs" />
     <Compile Include="Caminho.cs" />
     <Compile Include="Cidade.cs" />

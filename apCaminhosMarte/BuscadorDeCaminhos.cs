@@ -56,23 +56,12 @@ namespace apCaminhosMarte
             return buscador.Solucoes;
         }
 
-        public List<Caminho> BuscarCaminhoDijkstra(int idOrigem, int idDestino)
+        public List<Caminho> BuscarCaminhoDijkstra(Cidade origem, Cidade destino, string criterio)
         {
-            // inicializar as listas necessárias para execução
-            List<Caminho> melhorCaminhoDijkstra = new List<Caminho>();
-            jaVisitados = new List<int>();
+            BuscadorDijkstra buscador = new BuscadorDijkstra(Matriz, origem, destino, criterio);
+            buscador.Solucionar();
 
-            // como estamos na cidade de origem, adicioná-la à lista de cidades visitadas
-            jaVisitados.Add(idOrigem);
-
-            // chamar o método interno BuscarCaminho(), passando uma lista de Caminhos vazia para representar o conjunto de Caminhos atual
-            //BuscarCaminhoDijkstra(new List<Caminho>(), idOrigem, idDestino);
-
-            // se não há caminhos entre as cidades selecionadas, retorna null
-            if (todosCaminhos.Count() == 0) return null;
-
-            // senão, retorna os caminhos
-            return melhorCaminhoDijkstra;
+            return new List<Caminho>();
         }
 
         private void BuscarCaminhoBackTracking(List<Caminho> caminhoAtual, int cidadeAtual, int cidadeDestino)
